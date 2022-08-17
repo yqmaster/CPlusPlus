@@ -18,12 +18,15 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="CustomString.cpp">
+    <ClCompile Include="customstring.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CustomString.h">
+    <ClInclude Include="customstring.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="misc.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
