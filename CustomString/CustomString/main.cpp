@@ -1,5 +1,4 @@
-#include "customstring.h"
-//#include <iostream>
+#include "CustomString.h"
 
 int main() {
 	auto str1 = CustomString("test1");

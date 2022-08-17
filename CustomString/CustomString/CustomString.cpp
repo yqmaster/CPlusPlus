@@ -1,6 +1,6 @@
-#include "customstring.h"
+#include "CustomString.h"
 #include "cassert"
-#include "misc.hpp"
+#include "Misc.hpp"
 
 CustomString::CustomString()
 {
@@ -10,18 +10,7 @@ CustomString::CustomString()
 
 CustomString::~CustomString()
 {
-	// 长度先清零
-	this->_len = 0;
-
-	// 如果已经为空了就直接返回
-	if (this->_str == NULL)
-	{
-		return;
-	}
-
-	// 清空内存
-	delete this->_str;
-	this->_len = NULL;
+	this->clearCustomString();
 }
 
 CustomString::CustomString(const char* str)
@@ -41,10 +30,7 @@ CustomString& CustomString::operator=(const CustomString& str)
 		return *this;
 	}
 
-	this->_len = 0;
-	delete this->_str;
-	this->_str = NULL;
-
+	this->clearCustomString();
 	this->setNewCustomString(str);
 	return *this;
 }
@@ -64,6 +50,7 @@ CustomString CustomString::sub(int pos, int count)
 
 	int length = count;
 	if (pos + count >= this->_len) {
+
 	}
 
 	while (1)
@@ -102,4 +89,20 @@ void CustomString::setNewCustomString(const CustomString& str)
 	this->_len = str._len;
 	this->_str = new char[this->_len + 1];
 	copyChar(this->_str, str._str);
+}
+
+void CustomString::clearCustomString()
+{
+	// 长度先清零
+	this->_len = 0;
+
+	// 如果已经为空了就直接返回
+	if (this->_str == NULL)
+	{
+		return;
+	}
+
+	// 清空内存
+	delete this->_str;
+	this->_len = NULL;
 }

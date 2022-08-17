@@ -7,6 +7,7 @@ public:
 	CustomString();
 	// 析构函数
 	~CustomString();
+
 	// 普通构造函数
 	CustomString(const char* str);
 	// 复制构造函数
@@ -23,4 +24,5 @@ private:
 	int _len;
 	void setNewCustomString(const char* str);
 	void setNewCustomString(const CustomString& str);
+	void clearCustomString();
 };
