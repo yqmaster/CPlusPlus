@@ -18,6 +18,9 @@ public:
 	int len();
 	// 返回子串
 	CustomString sub(int pos, int count);
+	// 后面添加
+	void append(const char* str);
+	void append(const CustomString str);
 
 private:
 	char* _str;

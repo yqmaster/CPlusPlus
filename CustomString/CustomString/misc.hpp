@@ -26,7 +26,6 @@ void copyChar(char* str1, const char* str2)
 
 	while (*str2 != '\0')
 	{
-		// std::cout << *str1 << "<------ " << *str2 << std::endl;
 		*str1++ = *str2++;
 	}
 	*str1 = '\0';

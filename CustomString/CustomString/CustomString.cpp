@@ -42,24 +42,66 @@ int CustomString::len()
 
 CustomString CustomString::sub(int pos, int count)
 {
+	// 越界则返回空string
+	if (pos > this->_len || pos <= 0 || count <= 0)
+	{
+		return CustomString("");
+	}
+
 	// 判断长度，申请相应的空间
-	if (pos >= this->_len || pos <= 0 || count <= 0)
-	{
-		return CustomString();
-	}
-
 	int length = count;
-	if (pos + count >= this->_len) {
-
-	}
-
-	while (1)
+	if (pos + count - 1 >= this->_len)
 	{
+		length = this->_len - pos;
 	}
-
-	char* str = new char(length);
+	
+	// 赋值
+	char* str = new char[length];
+	for (int i = 0; i < length; i++)
+	{
+		str[i] = this->_str[pos + i -1];
+	}
+	str[length] = '\0';
 
 	return CustomString(str);
+}
+
+void CustomString::append(const char* str)
+{
+	// 如果为空，则新建
+	if (this->_str == NULL) 
+	{
+		this->setNewCustomString(str);
+		return;
+	}
+
+	// TODO 如果不为空，则往后加
+	int strLength = getCharLength(str);
+	int length = strLength  + this->_len;
+	char* temp = new char[length + 1];
+	for (int i = 0; i < this->_len; i++)
+	{
+		temp[i] = this->_str[i];
+	}
+	for (int i = 0; i < strLength; i++)
+	{
+		temp[i + this->_len - 1] = str[i];
+	}
+
+	
+}
+
+void CustomString::append(const CustomString str)
+{
+	// 如果为空，则新建
+	if (this->_str == NULL)
+	{
+		this->setNewCustomString(str);
+		return;
+	}
+	// TODO 如果不为空，则往后加
+
+
 }
 
 void CustomString::setNewCustomString(const char* str)
