@@ -1,4 +1,8 @@
 #pragma once
+#include <ostream>
+
+#ifndef _CUSTOM_STRING_H
+#define _CUSTOM_STRING_H
 
 class CustomString
 {
@@ -21,6 +25,14 @@ public:
 	// 后面添加
 	void append(const char* str);
 	void append(const CustomString str);
+	// 重载关系运算符
+	bool operator == (const CustomString& str);
+	// 查找某串字符串的位置
+	int find(const char* str);
+
+
+	// 重载输出运算符
+	friend std::ostream& operator<<(std::ostream& output, const CustomString& str);
 
 private:
 	char* _str;
@@ -29,3 +41,5 @@ private:
 	void setNewCustomString(const CustomString& str);
 	void clearCustomString();
 };
+
+#endif 

@@ -1,5 +1,4 @@
 #include "CustomString.h"
-#include "cassert"
 #include "Misc.hpp"
 
 CustomString::CustomString()
@@ -54,12 +53,12 @@ CustomString CustomString::sub(int pos, int count)
 	{
 		length = this->_len - pos;
 	}
-	
+
 	// 赋值
 	char* str = new char[length];
-	for (int i = 0; i < length; i++)
+	for (size_t i = 0; i < length; i++)
 	{
-		str[i] = this->_str[pos + i -1];
+		str[i] = this->_str[pos + i - 1];
 	}
 	str[length] = '\0';
 
@@ -69,26 +68,29 @@ CustomString CustomString::sub(int pos, int count)
 void CustomString::append(const char* str)
 {
 	// 如果为空，则新建
-	if (this->_str == NULL) 
+	if (this->_str == NULL)
 	{
 		this->setNewCustomString(str);
 		return;
 	}
 
-	// TODO 如果不为空，则往后加
-	int strLength = getCharLength(str);
-	int length = strLength  + this->_len;
-	char* temp = new char[length + 1];
-	for (int i = 0; i < this->_len; i++)
+	// 如果不为空，则往后加
+	int strLength = GlobalFunction::getCharLength(str);
+	int newLength = strLength + this->_len;
+	char* temp = new char[strLength + this->_len + 1];
+	for (size_t i = 0; i < this->_len; i++)
 	{
 		temp[i] = this->_str[i];
 	}
-	for (int i = 0; i < strLength; i++)
+	for (size_t i = 0; i < strLength; i++)
 	{
-		temp[i + this->_len - 1] = str[i];
+		temp[i + this->_len] = str[i];
 	}
+	temp[newLength] = '\0';
 
-	
+	delete this->_str;
+	this->_str = temp;
+	this->_len = newLength;
 }
 
 void CustomString::append(const CustomString str)
@@ -99,9 +101,73 @@ void CustomString::append(const CustomString str)
 		this->setNewCustomString(str);
 		return;
 	}
-	// TODO 如果不为空，则往后加
+	//如果不为空，则往后加
+	int strLength = str._len;
+	int newLength = strLength + this->_len;
+	char* temp = new char[strLength + this->_len + 1];
+	for (size_t i = 0; i < this->_len; i++)
+	{
+		temp[i] = this->_str[i];
+	}
+	for (size_t i = 0; i < strLength; i++)
+	{
+		temp[i + this->_len] = str._str[i];
+	}
 
+	delete this->_str;
+	this->_str = temp;
+	this->_len = newLength;
+}
 
+bool CustomString::operator==(const CustomString& str)
+{
+	// 如果比较的是自己直接返回
+	if (this == &str)
+	{
+		return true;
+	}
+	// 先比较长度
+	if (this->_len != str._len)
+	{
+		return false;
+	}
+	// 一个字符一个字符的比较
+	for (size_t i = 0; i < this->_len; i++)
+	{
+		if (this->_str[i] != str._str[i])
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+int CustomString::find(const char* str)
+{
+	int length = GlobalFunction::getCharLength(str);
+	if (length > this->_len)
+	{
+		return -1;
+	}
+
+	// 外循环
+	for (size_t i = 0; i < this->_len - length; i++)
+	{
+		// 内循环
+		for (size_t j = 0; j < length; j++)
+		{
+			// 判断条件：相等且为最后一个时，返回结果
+			if (this->_str[i + j] != str[j])
+			{
+				break;
+			}
+			if (j == length - 1)
+			{
+				return i+1;
+			}
+		}
+	}
+	return -1;
 }
 
 void CustomString::setNewCustomString(const char* str)
@@ -114,9 +180,9 @@ void CustomString::setNewCustomString(const char* str)
 		return;
 	}
 
-	this->_len = getCharLength(str);
+	this->_len = GlobalFunction::getCharLength(str);
 	this->_str = new char[this->_len + 1];
-	copyChar(this->_str, str);
+	GlobalFunction::copyChar(this->_str, str);
 }
 
 void CustomString::setNewCustomString(const CustomString& str)
@@ -130,7 +196,7 @@ void CustomString::setNewCustomString(const CustomString& str)
 	}
 	this->_len = str._len;
 	this->_str = new char[this->_len + 1];
-	copyChar(this->_str, str._str);
+	GlobalFunction::copyChar(this->_str, str._str);
 }
 
 void CustomString::clearCustomString()
@@ -147,4 +213,11 @@ void CustomString::clearCustomString()
 	// 清空内存
 	delete this->_str;
 	this->_len = NULL;
+}
+
+
+std::ostream& operator<<(std::ostream& output, const CustomString& str)
+{
+	output << str._str;
+	return output;
 }
