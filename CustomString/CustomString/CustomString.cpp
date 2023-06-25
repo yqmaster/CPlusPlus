@@ -1,4 +1,4 @@
-#include "CustomString.h"
+#include "CustomString.hpp"
 #include "Misc.hpp"
 
 CustomString::CustomString()
@@ -168,6 +168,12 @@ int CustomString::find(const char* str)
 		}
 	}
 	return -1;
+}
+
+CustomString* CustomString::split(const char* str)
+{
+	auto str1 = 
+	return nullptr;
 }
 
 void CustomString::setNewCustomString(const char* str)

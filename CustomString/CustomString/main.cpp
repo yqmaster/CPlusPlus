@@ -1,4 +1,4 @@
-#include "CustomString.h"
+#include "CustomString.hpp"
 #include <iostream>
 
 int main() {
@@ -12,7 +12,8 @@ int main() {
 	bool equal = str1 == str3;
 	int index = str1.find("es");
 	std::cout << index;
+	CustomString* ret = str2.split(", "); 
 
-	//CustomString* ret = str2.split(", "); 
+
 	return 0;
 }

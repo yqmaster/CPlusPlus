@@ -23,7 +23,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CustomString.h">
+    <ClInclude Include="CustomString.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Misc.hpp">

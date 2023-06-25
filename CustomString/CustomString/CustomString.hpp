@@ -29,7 +29,8 @@ public:
 	bool operator == (const CustomString& str);
 	// ²éÕÒÄ³´®×Ö·û´®µÄÎ»ÖÃ
 	int find(const char* str);
-
+	// ·Ö¸î×Ö·û´®
+	CustomString* split(const char* str);
 
 	// ÖØÔØÊä³öÔËËã·û
 	friend std::ostream& operator<<(std::ostream& output, const CustomString& str);
