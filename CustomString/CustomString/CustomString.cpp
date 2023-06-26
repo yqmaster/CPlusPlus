@@ -1,5 +1,6 @@
 #include "CustomString.hpp"
 #include "Misc.hpp"
+#include "vector"
 
 CustomString::CustomString()
 {
@@ -51,7 +52,7 @@ CustomString CustomString::sub(int pos, int count)
 	int length = count;
 	if (pos + count - 1 >= this->_len)
 	{
-		length = this->_len - pos;
+		length = this->_len - pos + 1;
 	}
 
 	// 赋值
@@ -163,7 +164,7 @@ int CustomString::find(const char* str)
 			}
 			if (j == length - 1)
 			{
-				return i+1;
+				return i + 1;
 			}
 		}
 	}
@@ -172,8 +173,54 @@ int CustomString::find(const char* str)
 
 CustomString* CustomString::split(const char* str)
 {
-	auto str1 = 
-	return nullptr;
+	int length = GlobalFunction::getCharLength(str);
+	if (length > this->_len)
+	{
+		return { new CustomString(str) };
+	}
+
+	std::vector<int> temp;
+	// 外循环
+	for (size_t i = 0; i < this->_len - length; i++)
+	{
+		// 内循环
+		for (size_t j = 0; j < length; j++)
+		{
+			// 判断条件：相等且为最后一个
+			if (this->_str[i + j] != str[j])
+			{
+				break;
+			}
+			if (j == length - 1)
+			{
+				temp.push_back(i + 1);
+				break;
+			}
+		}
+	}
+
+	if (temp.size() <= 0)
+	{
+		return { new CustomString(str) };
+	}
+
+	CustomString* result = new CustomString[temp.size() + 1];
+	int a = 0;
+
+	for (int i = 0; i <= temp.size(); i++)
+	{
+		if (i == temp.size())
+		{
+			result[i] = sub(a + 2, this->_len - a);
+		}
+		else
+		{
+			int index = temp[i];
+			result[i] = sub(a + 1, index - a - 1);
+			a = index;
+		}
+	}
+	return result;
 }
 
 void CustomString::setNewCustomString(const char* str)
